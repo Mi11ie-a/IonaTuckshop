@@ -1,7 +1,9 @@
 # Database Manager
 # Handles the data
-
+import hashlib
 import sqlite3
+import enum
+import json
 # DATA STRUCTURE Item
 # Stores item information
 class Item():
@@ -23,9 +25,18 @@ class User():
     is_active: bool
     is_anonymous: bool
 
-    def __init__(self, Username:str, Password:str):
-        self.Username = Username
-        self.Password = Password
+    def __init__(self, UserID:int = None, Username:str = None, Password:str = None, ContactEmail:str = None, IsActive:bool = None,):
+        if UserID != None:
+            self.UserID = UserID
+        if Username != None:
+            self.Username = Username
+        if Password != None:
+            self.Password = Password
+        if ContactEmail != None:
+            self.ContactEmail = ContactEmail
+        if IsActive != None:
+            self.IsActive = IsActive
+
     def get_id(self):
         return self.UserID
 
@@ -36,10 +47,18 @@ class Order():
     OrderContent : Item = []
     OrderActive: bool
 
+class ELoginErrorType(enum.Enum):
+    FailedUsername = 0
+    FailedPassword = 1
+    FailedNone = 2
+    FailedActive = 3
+    FailedExist = 4
 
 # ITEM MANAGER
 # Manages menu items within the database
-class ItemManager():
+
+
+class ItemManager:
 
     def AddItem(self, AddedItem:Item):
         pass
@@ -53,7 +72,7 @@ class ItemManager():
 
 # ORDERING MANAGER
 # Manages the orders as they are made
-class OrderingManager():
+class OrderingManager:
 
     def __init__(self):
         print("Ordering Manager Initialised")
@@ -68,24 +87,25 @@ class OrderingManager():
         pass
 
 
-class EncryptionManager():
+class EncryptionManager:
 
     def Encrypt(self, ToEncrypt: str):
         pass
 
-class UserManager():
+
+class UserManager:
 
     Code : EncryptionManager
     CurrentUser: User
 
     # METHODS
-    def __init__(self, User:User):
+    def __init__(self, User:User = None):
         Code = EncryptionManager()
         self.CurrentUser = User
         print("User Manager Initialised")
 
     def get_id(self):
-
+        pass
 
     #Uses the username to get the user ID from the data base (first auth check)
     def FindUser(self, User:User):
@@ -93,15 +113,17 @@ class UserManager():
         c = sql.cursor()
         c.execute("""SELECT Username FROM users WHERE Username = ?""", (User.Username))
         if c.fetchone() != None:
-            return True
+            return c.fetchone()
         else:
-            return False
+            return None
 
     def LoadUser(self, ID:int):
         sql = sqlite3.connect('main')
         c = sql.cursor()
-        c.execute("""SELECT * FROM Users WHERE UserID =?""", (ID))
-        return c.fetchall()
+        c.execute("""SELECT * FROM Users WHERE UserID =?""", (ID,))
+        for i in c.fetchone():
+            LoadedUser = User(i[0], i[1], i[2], i[3], i[4], i[5])
+        return LoadedUser
 
     def GetUserID(self):
         return self.CurrentUser.UserID
@@ -114,12 +136,31 @@ class UserManager():
             if self.Code.Encrypt(User.Password) == c.fetchone():
                 return True
             else:
-                return False
+                return ELoginErrorType.FailedPassword
         else:
-            return False
+            return ELoginErrorType.FailedActive
 
-
+import collections
 class EndpointManager():
 
-    def DoStuff(self):
-        pass
+    def ConvertToJson(self, Category:str, data:collections.defaultdict):
+        data[Category]
+        return data
+
+    def DumpData(self, data):
+        with open('test.json', 'w') as JsonFile:
+            json.dump(data, JsonFile, indent=4)
+
+
+data = {
+    "bad": {
+    "Hello": 1,
+    "You": 2,
+    "Are": 3,
+    "Stupid": 4
+}
+
+}
+man = EndpointManager()
+
+print(man.ConvertToJson("Hello", data))

@@ -4,7 +4,7 @@ from flask_login import login_manager, login_required
 app = Flask(__name__)
 
 # Init all managers
-OrderMan = OrderingManager()
+#OrderMan = OrderingManager()
 UserMan = UserManager()
 
 loginman = login_manager.LoginManager()
@@ -21,17 +21,25 @@ def Landing():
 def Menu():
     return render_template('base.html')
 
-@app.route('loginredirect', methods=['GET', 'POST'])
+@app.route('/loginredirect', methods=['GET', 'POST'])
 def Login():
     Username = request.form['Username']
     Password = request.form['Password']
     NewUser = User(Username, Password)
-    if UserMan.FindUser(NewUser) == True:
-        UserMan.LoadUser()
+    if UserMan.FindUser(NewUser) != None:
+        NewUser = UserMan.LoadUser(UserMan.FindUser(NewUser))
+        if UserMan.LoginUser(NewUser) == True:
+            UserMan.CurrentUser = NewUser
+            UserMan.CurrentUser.is_authenticated = True
+        else:
+            NewUser.is_authenticated = False
+            return redirect(url_for('Landing'))
+
+@loginman.user_loader()
+def load_user(user_id):
+    return UserMan.CurrentUser.UserID
 
 
-def LoadUser(UserID):
-    return UserManager.GetUserID()
 
 if __name__ == '__main__':
     app.run()
