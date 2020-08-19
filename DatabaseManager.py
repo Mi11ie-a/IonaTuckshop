@@ -21,7 +21,7 @@ class User():
     Username: str
     Password: str
     ContactEmail: str
-    IsActive: bool
+    is_active: bool
 
     is_authenticated: bool
     is_active: bool
@@ -39,14 +39,16 @@ class User():
         if ContactEmail != None:
             self.ContactEmail = ContactEmail
         if IsActive != None:
-            self.IsActive = IsActive
+            self.is_active = IsActive
         if IsAdmin != None:
             self.IsAdmin = IsAdmin
 
-    @property
+
     def get_id(self):
         return self.UserID
 
+    def is_authenticated(self):
+        return self.is_authenticated
 
 # DATA STRUCTURE ORDER
 # Stores order information to be entered into the database
@@ -114,9 +116,6 @@ class EncryptionManager:
         )
         return key
 
-cool = EncryptionManager()
-print(cool.Encrypt("pass"))
-
 
 class UserManager:
     Code: EncryptionManager = EncryptionManager()
@@ -151,26 +150,41 @@ class UserManager:
         LoadedUser = User(UserData[0], UserData[1], UserData[2], UserData[3], UserData[4], UserData[5], UserData[6])
         return LoadedUser
 
+
+    def LoadUserFromID(self, ID: int):
+        sql = sqlite3.connect('main')
+        c = sql.cursor()
+        c.execute("""SELECT * FROM Users WHERE UserID =?""", (ID,))
+        UserData = c.fetchall()[0]
+        print(UserData)
+        LoadedUser = User(UserData[0], UserData[1], UserData[2], UserData[3], UserData[4], UserData[5], UserData[6])
+        return LoadedUser
+
     def GetUserID(self):
         return self.CurrentUser.UserID
 
     def LoginUser(self, User: User, EnteredPass: str):
-        if User.IsActive == True:
+        if User.is_active == True:
             sql = sqlite3.connect('main')
             c = sql.cursor()
             c.execute("""SELECT Password FROM users WHERE UserID = (?)""", (User.UserID,))
-            print(EnteredPass)
-            print(c.fetchone())
             result = c.fetchone()
-            if self.Code.Encrypt(EnteredPass) == str(result[0]):
+            print("Index 0: " + result[0])
+            if str(self.Code.Encrypt(EnteredPass)) == str(result[0]):
+                print("Password was the same YAY")
                 return True
             else:
+                print("Password Failed")
                 return ELoginErrorType.FailedPassword
+
         else:
+            print("Failed Active")
             return ELoginErrorType.FailedActive
+
 
     def IsAdmin(self):
         pass
+
 
 #
 def ConnectSQL(connect: str):
@@ -186,12 +200,39 @@ def CommitSQL(c):
     c.close()
 
 
+def GetTableHeaders(TableName: str):
+    c = ConnectSQL('main')
+    c.execute("""PRAGMA table_info(Orders)""")
+    output: list = []
+    for i in c.fetchall():
+        output.append(i[1])
+    print(output)
+    return output
+
+
 class EndpointManager():
 
     @staticmethod
-    def ConvertToJson(self, Category: str, data: dict):
-        string = {Category: str(data)}
-        return string
+    def ConvertToJson(Category: str, data, table: str = None):
+        if table != None:
+            headers = GetTableHeaders(table)
+            HeaderDict = {}
+            for i in headers:
+                HeaderDict[i] = {}
+            print(HeaderDict)
+            HeaderDictString = str(HeaderDict)
+            HeaderDictString = HeaderDictString.replace('{', '')
+            HeaderDictString = HeaderDictString.replace('}', '')
+            print("HeaderDICT: " + HeaderDictString)
+            string = {Category:{
+                HeaderDictString:{}
+            }}
+            return string
+        else:
+            for i in data:
+                string = {Category: str(i)}
+                print(string)
+            return string
 
     @staticmethod
     def DumpData(data: dict):
@@ -247,5 +288,13 @@ class EndpointManager():
         c = ConnectSQL("maindb")
         c.execute("""SELECT SUM(TotalBought) FROM Items""")
         return c.fetchall()
+
+    @staticmethod
+    def GetAllOrders():
+        c = ConnectSQL("main")
+        print(c)
+        c.execute("""SELECT * FROM Orders""")
+        return c.fetchall()
+
 
 
