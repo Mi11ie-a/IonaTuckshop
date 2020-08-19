@@ -1,8 +1,15 @@
 {
-    "bad": {
-        "Hello": 1,
-        "You": 2,
-        "Are": 3,
-        "Stupid": 4
+    "Users" : {
+        "UserCountActive": 0,
+        "UserCount": 0,
+        ""
+    }
+    "Items": {
+        "ItemCount": 0,
+        "AvgItemPrice": 0.00,
+        ""
+    },
+    "Orders": {
+
     }
 }

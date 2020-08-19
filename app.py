@@ -21,21 +21,22 @@ def Landing():
 def Menu():
     return render_template('base.html')
 
-@app.route('/loginredirect', methods=['GET', 'POST'])
+@app.route('/loginredirect', methods=['POST'])
 def Login():
-    Username = request.form['Username']
-    Password = request.form['Password']
-    NewUser = User(Username, Password)
-    if UserMan.FindUser(NewUser) != None:
-        NewUser = UserMan.LoadUser(UserMan.FindUser(NewUser))
-        if UserMan.LoginUser(NewUser) == True:
-            UserMan.CurrentUser = NewUser
-            UserMan.CurrentUser.is_authenticated = True
+    if request.method == "POST":
+        EnteredP = request.form['Password']
+        EnteredU = request.form['Username']
+        if UserMan.FindUser(EnteredU) != False:
+            NewUser = UserMan.LoadUser(EnteredU)
+            if UserMan.LoginUser(NewUser, EnteredP) == True:
+                return redirect(url_for('Menu'))
+            else:
+                return redirect(url_for('Landing'))
         else:
-            NewUser.is_authenticated = False
             return redirect(url_for('Landing'))
-
-@loginman.user_loader()
+    else:
+        return redirect(url_for('Landing'))
+@loginman.user_loader
 def load_user(user_id):
     return UserMan.CurrentUser.UserID
 
