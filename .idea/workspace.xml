@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="67447710-976b-48b3-bc0e-550e7d0c37d7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExternalApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/ExternalApp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/raw.JSON" beforeDir="false" afterPath="$PROJECT_DIR$/raw.JSON" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/items.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/items.html" afterDir="false" />
-    </list>
+    <list default="true" id="67447710-976b-48b3-bc0e-550e7d0c37d7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,13 +11,13 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/IonaTuckshop$DBG.coverage" NAME="DBG Coverage Results" MODIFIED="1596446898921" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/IonaTuckshop$DatabaseManager.coverage" NAME="DatabaseManager Coverage Results" MODIFIED="1599040161105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/IonaTuckshop$IonaTuckshop.coverage" NAME="IonaTuckshop Coverage Results" MODIFIED="1599095798021" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/IonaTuckshop$IonaTuckshop.coverage" NAME="IonaTuckshop Coverage Results" MODIFIED="1599187856043" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/IonaTuckshop$owo.coverage" NAME="owo Coverage Results" MODIFIED="1597132705468" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Downloads" />
     <SUITE FILE_PATH="coverage/IonaTuckshop$events.coverage" NAME="events Coverage Results" MODIFIED="1596627887147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/IonaTuckshop$count.coverage" NAME="count Coverage Results" MODIFIED="1598158117553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Downloads" />
     <SUITE FILE_PATH="coverage/IonaTuckshop$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1598842457564" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/IonaTuckshop$ExternalApp.coverage" NAME="ExternalApp Coverage Results" MODIFIED="1599095800971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/IonaTuckshop$Flask__app_py___1_.coverage" NAME="Flask (app.py) (1) Coverage Results" MODIFIED="1598661368429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/IonaTuckshop$Flask__app_py___1_.coverage" NAME="Flask (app.py) (1) Coverage Results" MODIFIED="1599187848018" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/IonaTuckshop$fun.coverage" NAME="fun Coverage Results" MODIFIED="1598831994931" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Fun-Things" />
   </component>
   <component name="DatabaseView">
@@ -159,7 +152,7 @@
           <entry key="json" value="974" />
           <entry key="py" value="27446" />
           <entry key="sql" value="485" />
-          <entry key="txt" value="252" />
+          <entry key="txt" value="288" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -167,7 +160,7 @@
           <entry key="CSS" value="96" />
           <entry key="HTML" value="2370" />
           <entry key="JSON" value="1027" />
-          <entry key="PLAIN_TEXT" value="252" />
+          <entry key="PLAIN_TEXT" value="288" />
           <entry key="Python" value="27420" />
           <entry key="SQL" value="354" />
           <entry key="Scratch" value="627" />
@@ -177,16 +170,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="109" selection-start-line="109" selection-end-line="109" />
+            <state relative-caret-position="90">
+              <caret line="98" column="35" selection-start-line="98" selection-start-column="35" selection-end-line="98" selection-end-column="35" />
               <folding>
-                <marker date="1599181811012" expanded="true" signature="1740:2121" ph="..." />
-                <marker date="1599181811012" expanded="true" signature="1869:2121" ph="..." />
-                <marker date="1599181811012" expanded="true" signature="3500:3505" ph="..." />
-                <marker date="1599181811012" expanded="true" signature="3556:3637" ph="..." />
+                <marker date="1599186468153" expanded="true" signature="1740:2121" ph="..." />
+                <marker date="1599186468153" expanded="true" signature="1869:2121" ph="..." />
+                <marker date="1599186468153" expanded="true" signature="3445:3449" ph="..." />
+                <marker date="1599186468153" expanded="true" signature="3500:3581" ph="..." />
               </folding>
             </state>
           </provider>
@@ -195,17 +188,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/items.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="166" column="21" lean-forward="true" selection-start-line="166" selection-start-column="21" selection-end-line="166" selection-end-column="21" />
+            <state relative-caret-position="226">
+              <caret line="162" selection-start-line="162" selection-end-line="162" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DatabaseManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
+            <state relative-caret-position="299">
+              <caret line="385" column="13" selection-start-line="385" selection-start-column="13" selection-end-line="385" selection-end-column="13" />
               <folding>
                 <element signature="e#38#52#0" expanded="true" />
                 <marker date="1599186432749" expanded="true" signature="858:863" ph="..." />
@@ -269,9 +262,9 @@
         <option value="$PROJECT_DIR$/test.json" />
         <option value="$PROJECT_DIR$/raw.JSON" />
         <option value="$PROJECT_DIR$/ExternalApp.py" />
+        <option value="$PROJECT_DIR$/DatabaseManager.py" />
         <option value="$PROJECT_DIR$/templates/items.html" />
         <option value="$PROJECT_DIR$/app.py" />
-        <option value="$PROJECT_DIR$/DatabaseManager.py" />
       </list>
     </option>
   </component>
@@ -350,7 +343,10 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Flask server.IonaTuckshop">
+  <component name="RunManager" selected="JavaScript Debug.endpoints.html">
+    <configuration name="endpoints.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/IonaTuckshop/templates/endpoints.html">
+      <method v="2" />
+    </configuration>
     <configuration name="DatabaseManager" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="IonaTuckshop" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -395,48 +391,19 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="count" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Flask (app.py) (1)" type="Python.FlaskServer" factoryName="Flask server" temporary="true" nameIsGenerated="true">
       <module name="IonaTuckshop" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Downloads" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$USER_HOME$/Downloads/count.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="fun" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="IonaTuckshop" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Fun-Things" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../Fun-Things/fun.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
     <configuration name="Flask (app.py)" type="Python.FlaskServer" factoryName="Flask server" temporary="true" nameIsGenerated="true">
@@ -479,17 +446,17 @@
       <item itemvalue="Flask server.IonaTuckshop" />
       <item itemvalue="Flask server.Flask (app.py)" />
       <item itemvalue="Python.DatabaseManager" />
-      <item itemvalue="Python.count" />
       <item itemvalue="Python.ExternalApp" />
-      <item itemvalue="Python.fun" />
+      <item itemvalue="Flask server.Flask (app.py) (1)" />
+      <item itemvalue="JavaScript Debug.endpoints.html" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.endpoints.html" />
+        <item itemvalue="Flask server.Flask (app.py) (1)" />
         <item itemvalue="Python.ExternalApp" />
         <item itemvalue="Python.DatabaseManager" />
         <item itemvalue="Flask server.Flask (app.py)" />
-        <item itemvalue="Python.fun" />
-        <item itemvalue="Python.count" />
       </list>
     </recent_temporary>
   </component>
@@ -539,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598770443997</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="some additions to things">
+      <created>1599186479876</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1599186479877</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -553,14 +527,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Structure" order="0" sideWeight="0.51536316" side_tool="true" visible="true" weight="0.2147651" />
+      <window_info id="Structure" order="0" sideWeight="0.51594746" side_tool="true" visible="true" weight="0.2147651" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.48463687" visible="true" weight="0.2147651" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.48405254" visible="true" weight="0.2147651" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49932885" weight="0.32867134" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.70604026" weight="0.2555866" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.70604026" visible="true" weight="0.2555866" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6279318" weight="0.49860334" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -649,7 +622,8 @@
     <MESSAGE value="adding some login stuff and endpoint things" />
     <MESSAGE value="basic working login system" />
     <MESSAGE value="JSON enpoints working somewhat" />
-    <option name="LAST_COMMIT_MESSAGE" value="JSON enpoints working somewhat" />
+    <MESSAGE value="some additions to things" />
+    <option name="LAST_COMMIT_MESSAGE" value="some additions to things" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1101,28 +1075,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/items.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="166" column="21" lean-forward="true" selection-start-line="166" selection-start-column="21" selection-end-line="166" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="109" selection-start-line="109" selection-end-line="109" />
-          <folding>
-            <marker date="1599181811012" expanded="true" signature="1740:2121" ph="..." />
-            <marker date="1599181811012" expanded="true" signature="1869:2121" ph="..." />
-            <marker date="1599181811012" expanded="true" signature="3500:3505" ph="..." />
-            <marker date="1599181811012" expanded="true" signature="3556:3637" ph="..." />
-          </folding>
+        <state relative-caret-position="226">
+          <caret line="162" selection-start-line="162" selection-end-line="162" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DatabaseManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
+        <state relative-caret-position="299">
+          <caret line="385" column="13" selection-start-line="385" selection-start-column="13" selection-end-line="385" selection-end-column="13" />
           <folding>
             <element signature="e#38#52#0" expanded="true" />
             <marker date="1599186432749" expanded="true" signature="858:863" ph="..." />
@@ -1131,6 +1092,19 @@
             <marker date="1599186432749" expanded="true" signature="2890:2909" ph="..." />
             <marker date="1599186432749" expanded="true" signature="4009:4307" ph="..." />
             <marker date="1599186432749" expanded="true" signature="9950:9955" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="98" column="35" selection-start-line="98" selection-start-column="35" selection-end-line="98" selection-end-column="35" />
+          <folding>
+            <marker date="1599186468153" expanded="true" signature="1740:2121" ph="..." />
+            <marker date="1599186468153" expanded="true" signature="1869:2121" ph="..." />
+            <marker date="1599186468153" expanded="true" signature="3445:3449" ph="..." />
+            <marker date="1599186468153" expanded="true" signature="3500:3581" ph="..." />
           </folding>
         </state>
       </provider>
