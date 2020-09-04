@@ -10,7 +10,7 @@ import json
 def ConnectSQL(connect: str):
     sql = sqlite3.connect(connect)
     c = sql.cursor()
-    return c
+    return c, sql
 
 
 # WARNING do not parse an object that is not a cursor it will break everything
@@ -78,7 +78,6 @@ class User:
         if IsAdmin != None:
             self.IsAdmin = IsAdmin
 
-
     def get_id(self):
         return self.UserID
 
@@ -90,8 +89,11 @@ class User:
 # Stores order information to be entered into the database
 class Order():
     OrderID: int
+    OrderName: str
     OrderContent: Item = []
     OrderActive: bool
+    PickupTime: str
+    PickupDate: int
 
 
 # ENUM LoginErrorType
@@ -109,7 +111,7 @@ class ELoginErrorType(enum.Enum):
 
 
 class ItemManager:
-    Items: Item = []
+    Items = []
 
     def __init__(self):
         self.LoadItems()
@@ -124,9 +126,7 @@ class ItemManager:
         pass
 
     def LoadItems(self):
-        if self.Items != None:
-            self.Items.clear()
-        c = ConnectSQL('main')
+        c, sql = ConnectSQL('main')
         c.execute("""SELECT * FROM Items""")
         for i in c.fetchall():
             LoadItem = Item(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
@@ -136,16 +136,37 @@ class ItemManager:
     def GetItems(self):
         return self.Items
 
+    def SearchItems(self, search: str):
+        SearchResult = []
+        c = ConnectSQL('main')
+        firstchar = search[0]
+        query = firstchar + '%'
+        c.execute("""SELECT * FROM Items WHERE ItemName LIKE ?""", (query,))
+        stuff = c.fetchall()
+        for i in stuff:
+            print(i)
+            LoadItem = Item(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
+            SearchResult.append(LoadItem)
+        return SearchResult
+
 
 # ORDERING MANAGER
 # Manages the orders as they are made
 class OrderingManager:
 
+    Cart = []
+
     def __init__(self):
         print("Ordering Manager Initialised")
 
     def PlaceOrder(self, PlacedOrder: Order):
-        pass
+        c, sql = ConnectSQL('main')
+        c.execute("""INSERT INTO Orders VALUES (?,?,True,?,?, ?)""", (
+        PlacedOrder.OrderID, PlacedOrder.OrderName, PlacedOrder.OrderActive, PlacedOrder.PickupTime,
+        PlacedOrder.PickupDate, PlacedOrder.OrderContent))
+        CommitSQL(sql)
+
+
 
     def CompleteOrder(self, Completed: Order):
         pass
@@ -154,7 +175,7 @@ class OrderingManager:
         pass
 
     def LoadActiveOrders(self):
-        c = ConnectSQL('Orders')
+        c, sql = ConnectSQL('Orders')
         c.execute("""SELECT * FROM Orders WHERE IsActive == True""")
         return c.fetchall()
 
@@ -201,7 +222,6 @@ class UserManager:
         c = sql.cursor()
         c.execute("""SELECT * FROM Users WHERE Username =?""", (Username,))
         UserData = c.fetchall()[0]
-        print(UserData)
         LoadedUser = User(UserData[0], UserData[1], UserData[2], UserData[3], UserData[4], UserData[5], UserData[6])
         return LoadedUser
 
@@ -210,7 +230,6 @@ class UserManager:
         c = sql.cursor()
         c.execute("""SELECT * FROM Users WHERE UserID =?""", (ID,))
         UserData = c.fetchall()[0]
-        print(UserData)
         LoadedUser = User(UserData[0], UserData[1], UserData[2], UserData[3], UserData[4], UserData[5], UserData[6])
         return LoadedUser
 
@@ -223,16 +242,12 @@ class UserManager:
             c = sql.cursor()
             c.execute("""SELECT Password FROM users WHERE UserID = (?)""", (User.UserID,))
             result = c.fetchone()
-            print("Index 0: " + result[0])
             if str(self.Code.Encrypt(EnteredPass)) == str(result[0]):
-                print("Password was the same YAY")
                 return True
             else:
-                print("Password Failed")
                 return ELoginErrorType.FailedPassword
 
         else:
-            print("Failed Active")
             return ELoginErrorType.FailedActive
 
     def IsAdmin(self):
@@ -241,14 +256,19 @@ class UserManager:
 
 #
 
+# Gets the table headers and returns them
+# dont ask me why but the SQL interpreter doen't regocnise this SQL statement...
 
 def GetTableHeaders(TableName: str):
-    c = ConnectSQL('main')
+    c, sql = ConnectSQL('main')
     c.execute("""PRAGMA table_info(Orders)""")
     output: list = []
     for i in c.fetchall():
         output.append(i[1])
     return output
+
+
+print(GetTableHeaders('Orders'))
 
 
 # :class EndpointManager
@@ -262,7 +282,7 @@ class EndpointManager:
     # :return Retrieved user data
     @staticmethod
     def GetUserData():
-        c = ConnectSQL("main")
+        c, sql = ConnectSQL("main")
         c.execute("""SELECT COUNT(UserID) FROM Users WHERE IsActive == 1""")
         return c.fetchall()[0][0]
 
@@ -270,7 +290,7 @@ class EndpointManager:
     # :return Retrieved data
     @staticmethod
     def GetOrderData():
-        c = ConnectSQL("main")
+        c, sql = ConnectSQL("main")
         c.execute("""SELECT * FROM Orders""")
         return c.fetchall()
 
@@ -278,8 +298,7 @@ class EndpointManager:
     # :return Retrieved data
     @staticmethod
     def GetAllItems():
-        c = ConnectSQL("main")
-        print(c)
+        c, sql = ConnectSQL("main")
         c.execute("""SELECT * FROM Items""")
         return c.fetchall()
 
@@ -287,7 +306,7 @@ class EndpointManager:
     # :return Retrieved data
     @staticmethod
     def GetExtraOrderInfo():
-        c = ConnectSQL('main')
+        c, sql = ConnectSQL('main')
         c.execute("""SELECT * FROM AdditionalOrderInfo""")
         return c.fetchall()[0][0]
 
@@ -297,7 +316,7 @@ class EndpointManager:
     # :return Retrieved data
     @staticmethod
     def GetCountTotalOrders():
-        c = ConnectSQL("main")
+        c, sql = ConnectSQL("main")
         c.execute("""SELECT COUNT(OrderID) FROM Orders""")
         return c.fetchall()[0][0]
 
@@ -305,7 +324,7 @@ class EndpointManager:
     # :return Retrieved data
     @staticmethod
     def GetCurrentOrderCount():
-        c = ConnectSQL("main")
+        c, sql= ConnectSQL("main")
         c.execute("""SELECT COUNT(OrderID) FROM Orders WHERE IsActive == 1""")
         return c.fetchall()[0][0]
 
@@ -313,7 +332,7 @@ class EndpointManager:
     # :return Retrieved data
     @staticmethod
     def GetItemCount():
-        c = ConnectSQL('main')
+        c, sql = ConnectSQL('main')
         c.execute("""SELECT COUNT(ItemID) FROM Items""")
         return c.fetchall()[0][0]
 
@@ -321,7 +340,7 @@ class EndpointManager:
     # :return Retrieved data
     @staticmethod
     def GetAvgItemPrice():
-        c = ConnectSQL('main')
+        c, sql = ConnectSQL('main')
         c.execute("""SELECT AVG(ItemPrice) FROM Items""")
         return c.fetchall()[0][0]
 
@@ -329,10 +348,9 @@ class EndpointManager:
     # :return Retrieved data
     @staticmethod
     def GetTotalBought():
-        c = ConnectSQL("main")
+        c, sql = ConnectSQL("main")
         c.execute("""SELECT SUM(TotalBought) FROM Items""")
         return c.fetchall()[0][0]
-
 
     ## --- SQL to JSON Data Conversion --- ##
 
@@ -358,7 +376,7 @@ class EndpointManager:
     @staticmethod
     def ConstructProcessedData():
         End = EndpointManager
-        return End.GetUserData(), End.GetCountTotalOrders(),End.GetCurrentOrderCount(), End.GetItemCount(), End.GetAvgItemPrice(), End.GetTotalBought()
+        return End.GetUserData(), End.GetCountTotalOrders(), End.GetCurrentOrderCount(), End.GetItemCount(), End.GetAvgItemPrice(), End.GetTotalBought()
 
     # Joins the literal string headers for the processed data with the data inputted to create a dictionary object
     # :param Data The processed data which was retrieved
@@ -368,7 +386,6 @@ class EndpointManager:
         Headers = ("UserCount", "TotalOrders", "CurrentOrders", "ItemCount", "AverageItemPrice", "TotalItemsBought")
         return EndpointManager.JSONDict(zip(Headers, tuple(Data)))
 
-
     ## Testing stuff
 
     @staticmethod
@@ -376,12 +393,8 @@ class EndpointManager:
         with open('raw.JSON', 'w') as JsonFile:
             return json.load(JsonFile.read())
 
-
     # This function will dump inputted data into the test.json file.
     @staticmethod
     def DumpData(data: dict):
         with open('test.json', 'w') as JsonFile:
             json.dump(data, JsonFile, indent=4)
-
-
-

@@ -48,7 +48,9 @@
                 </svg>
                 <strong>Iona College</strong>
             </a>
-            <button class="btn btn-warning" type="button">Logout</button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#login">
+                Logout
+            </button>
         </div>
     </div>
 </header>
@@ -70,47 +72,82 @@
             <div class="col-md-4">
                 <a href="#" class="btn btn-success my-2">Cart</a>
             </div>
-            <div class="col-md-4">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form action="{{ url_for('SearchMenu') }}" method="post">
+                <div class="col-md-4">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="Search">
             </div>
             <div class="col-md-4">
 
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </div>
 
+            </form>
+
         </div>
 
     </div>
 
-    <div class="album py-5 bg-light">
-        <div class="container">
-            {% for i in items %}
-            <div class="row">
-                <div class="col-md-4">
+    {% block Item %}
+        <div class="album py-5 bg-light">
+            <div class="container">
+
+                <div class="row">
+                    {% for i in items %}
+                        <div class="col-md-4">
 
                         <div class="card mb-4 shadow-sm">
 
-                            <img src={{ i.ItemImage }} class="card-img-top" alt="nothin">
+                            <img src="{{ i.ItemImage }}" class="card-img-top" alt="nothin">
 
                             <div class="card-body">
                                 <h4>{{ i.ItemName }}</h4>
                                 <p class="card-text">{{ i.ItemDesc }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-success">Add</button>
+                                        <button type="button" class="btn btn-sm btn-outline-success" onclick="">Add</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                     </div>
                                     <small class="text-muted">${{ i.ItemPrice }}</small>
                                 </div>
                             </div>
                         </div>
-                    {% endfor %}
+
+                    </div>
+                {% endfor %}
                 </div>
+
+            </div>
+        </div>
+    {% endblock %}
+</main>
+
+
+<div class="modal" tabindex="-1" id="login">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to logout?</p>
+
+            </div>
+            <div class="modal-footer">
+                <div class="form-group form-check">
+
+                </div>
+                <form action="{{ url_for('Landing') }}" method="GET">
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-</main>
 
 <footer class="text-muted">
     <div class="container">
@@ -122,6 +159,10 @@
                 href="../getting-started/introduction/">getting started guide</a>.</p>
     </div>
 </footer>
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

@@ -1,1 +1,16 @@
-{"UserCount": 1, "TotalOrders": 2, "CurrentOrders": 2, "ItemCount": 3, "AverageItemPrice": 37.5, "TotalItemsBought": 102}
+{
+  1: {
+    'OrderID': 1,
+    'OrderName': 'CoolOrder',
+    'IsActive': 1,
+    'PickupTime': 'Morning Tea',
+    'PickupDate': 1598434300551
+  },
+  2: {
+    'OrderID': 2,
+    'OrderName': 'BadOrder',
+    'IsActive': 1,
+    'PickupTime': 'Lunch',
+    'PickupDate': 1598347937721
+  }
+}
