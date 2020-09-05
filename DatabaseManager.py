@@ -1,5 +1,10 @@
-# Database Manager
-# Handles the data
+##### Database Manager.py #####
+""""""
+# Author : Anthony Kirn
+# Description : Main backend for Flask server handles the 'main' database and backend functions.
+# Also handles endpoints
+
+# Imports
 import hashlib
 import sqlite3
 import enum
@@ -15,6 +20,7 @@ def ConnectSQL(connect: str):
 
 # WARNING do not parse an object that is not a cursor it will break everything
 # This is a macro to commit a cursors changes to the database
+# :param Sqlite3.Cursor Object
 def CommitSQL(c):
     c.commit()
     c.close()
@@ -31,6 +37,15 @@ class Item():
     ItemCat: str
     TotalBought: str
 
+
+    # Constructor for Item object
+    # :param ItemID:int (Optional) -> ID of the item
+    # :param ItemName:str (Optional) -> Name of the item
+    # :param ItemDesc:str (Optional) -> Description of the item
+    # :param ItemPrice:float (Optional) -> The price of the item
+    # :param ItemImage:str (Optional) -> The image of the item
+    # :param ItemCat:str (Optional) -> The category of the item
+    # :param TotalBought:int (Optional) -> The amount of this item which has been bought
     def __init__(self, ItemID: int = None, ItemName: str = None, ItemDesc: str = None, ItemPrice: float = None,
                  ItemImage: str = None, ItemCat: str = None, TotalBought: str = None):
         if ItemID != None:
@@ -63,6 +78,14 @@ class User:
     is_anonymous: bool
     IsAdmin: bool
 
+    # Constructor for the user object
+    # :param UserID:int (Optional) -> ID of user
+    # :param Username:str (Optional) -> Username of user
+    # :param Password:str (Optional) -> Password of user
+    # :param IsActive:bool (Optional) -> Whether the user is active
+    # :param ContactEmail:str (Optional) -> The email of the user
+    # :param StudentID:int (Optional + Deprecated) -> The ID of the student
+    # :param IsAdmin:bool (Optional) Default: False -> Whether the user is an admin
     def __init__(self, UserID: int = None, Username: str = None, Password: str = None, IsActive: bool = None,
                  ContactEmail: str = None, StudentID: int = None, IsAdmin: bool = False):
         if UserID != None:
@@ -78,15 +101,25 @@ class User:
         if IsAdmin != None:
             self.IsAdmin = IsAdmin
 
+    ## Flask Login API
+
+    # Getter for UserID
     def get_id(self):
         return self.UserID
 
+    # Getter for is_authenticated
     def is_authenticated(self):
         return self.is_authenticated
 
 
 # DATA STRUCTURE ORDER
 # Stores order information to be entered into the database
+# :attribute OrderID:str -> The ID of the Order
+# :attribute OrderName:str-> The name of the Order
+# :attribute OrderContent:list -> Items contained in Order
+# :attribute OrderActive:bool -> Is the Order Active ?
+# :attribute PickupTime:str -> Lunch or Morning Tea
+# :attribute PickupData:int -> The data at which the order is to be picked up on
 class Order():
     OrderID: int
     OrderName: str
@@ -96,8 +129,12 @@ class Order():
     PickupDate: int
 
 
-# ENUM LoginErrorType
-# :type FailedUsername
+# ENUM LoginErrorType (Not Implemented Yet)
+# :type FailedUsername -> Incorrect username
+# :type FailedPassword -> Incorrect password
+# :type FailedNone -> When there is no input in the login
+# :type FailedActive -> User is no longer active
+# :type FailedExist -> User does not exist in the database
 class ELoginErrorType(enum.Enum):
     FailedUsername = 0
     FailedPassword = 1
@@ -108,13 +145,16 @@ class ELoginErrorType(enum.Enum):
 
 # ITEM MANAGER
 # Manages menu items within the database
-
-
 class ItemManager:
+    # List of items in the menu
     Items = []
 
+    # Constructor
+    # Loads items from the database
     def __init__(self):
         self.LoadItems()
+
+    ## General Methods ##
 
     def AddItem(self, AddedItem: Item):
         pass
@@ -125,6 +165,7 @@ class ItemManager:
     def EditItem(self, OldItem: Item, NewItem: Item):
         pass
 
+    # Loads all items from the database and appends :attribute Items
     def LoadItems(self):
         c, sql = ConnectSQL('main')
         c.execute("""SELECT * FROM Items""")
@@ -132,10 +173,12 @@ class ItemManager:
             LoadItem = Item(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
             self.Items.append(LoadItem)
 
+    # Getter for attribute Items
     @property
     def GetItems(self):
         return self.Items
 
+    #
     def SearchItems(self, search: str):
         SearchResult = []
         c = ConnectSQL('main')
@@ -150,10 +193,12 @@ class ItemManager:
         return SearchResult
 
 
+thing = ItemManager()
+
+
 # ORDERING MANAGER
 # Manages the orders as they are made
 class OrderingManager:
-
     Cart = []
 
     def __init__(self):
@@ -162,26 +207,32 @@ class OrderingManager:
     def PlaceOrder(self, PlacedOrder: Order):
         c, sql = ConnectSQL('main')
         c.execute("""INSERT INTO Orders VALUES (?,?,True,?,?, ?)""", (
-        PlacedOrder.OrderID, PlacedOrder.OrderName, PlacedOrder.OrderActive, PlacedOrder.PickupTime,
-        PlacedOrder.PickupDate, PlacedOrder.OrderContent))
+            PlacedOrder.OrderID, PlacedOrder.OrderName, PlacedOrder.OrderActive, PlacedOrder.PickupTime,
+            PlacedOrder.PickupDate, PlacedOrder.OrderContent))
         CommitSQL(sql)
 
-
-
+    # Will set the order given to inactive
+    # :param Completed:Order -> The order to mark as inactive
     def CompleteOrder(self, Completed: Order):
         pass
 
+    # Removes the order from the database
+    # :param RemovedOrder:Order -> The order to remove
     def RemoveOrder(self, RemovedOrder: Order):
         pass
 
+    # Loads all the active orders from the database
     def LoadActiveOrders(self):
         c, sql = ConnectSQL('Orders')
         c.execute("""SELECT * FROM Orders WHERE IsActive == True""")
         return c.fetchall()
 
-
+# :class Encryption Manager
+# Contains security functions
 class EncryptionManager:
 
+    # Takes a password and hashes it
+    # :param ToEncrypt:str -> A string to hash
     def Encrypt(self, ToEncrypt: str):
         salt = b'm\xe6%\x83,\xc1&\xa2\\s\x7fj\xb4\xfa\xcenZ&+\x7f\xe5\xbbx?/H\xe0\xabz-e\x0e'
         key = hashlib.pbkdf2_hmac(
@@ -192,22 +243,29 @@ class EncryptionManager:
         )
         return key
 
-
+# :class User Manager
+# Handles user authentication and management
 class UserManager:
+    # A instance of the Encryption Manager
     Code: EncryptionManager = EncryptionManager()
+    # Current User logged in
     CurrentUser: User
 
-    # METHODS
+    # Constructor for UserManager
+    # Set a default value for the current user
+    # And init the encryption manager
     def __init__(self, User: User = None):
         Code = EncryptionManager()
         self.CurrentUser = User
         print("User Manager Initialised")
 
+    # Getter for the UserID
     @property
     def get_id(self):
         return self.CurrentUser.UserID
 
     # Uses the username to get the user ID from the data base (first auth check)
+    # :param CheckUser:str -> The new user
     def FindUser(self, CheckUser: str):
         sql = sqlite3.connect('main')
         c = sql.cursor()
@@ -217,6 +275,8 @@ class UserManager:
         else:
             return False
 
+    # Loads the user fully from the database
+    # :param Username:str -> The username of the user to load
     def LoadUser(self, Username: str):
         sql = sqlite3.connect('main')
         c = sql.cursor()
@@ -225,6 +285,8 @@ class UserManager:
         LoadedUser = User(UserData[0], UserData[1], UserData[2], UserData[3], UserData[4], UserData[5], UserData[6])
         return LoadedUser
 
+    # Loads the user from the database using the ID
+    # :param ID:int -> Id of the user to load.
     def LoadUserFromID(self, ID: int):
         sql = sqlite3.connect('main')
         c = sql.cursor()
@@ -233,9 +295,9 @@ class UserManager:
         LoadedUser = User(UserData[0], UserData[1], UserData[2], UserData[3], UserData[4], UserData[5], UserData[6])
         return LoadedUser
 
-    def GetUserID(self):
-        return self.CurrentUser.UserID
-
+    # Authenticates the user and handles errors if they occur
+    # :param User:User -> The user to authenticate
+    # :param EnterPass:str -> The entered password to hash and check
     def LoginUser(self, User: User, EnteredPass: str):
         if User.is_active == True:
             sql = sqlite3.connect('main')
@@ -250,6 +312,7 @@ class UserManager:
         else:
             return ELoginErrorType.FailedActive
 
+    # Checker for if the user is an admin
     def IsAdmin(self):
         pass
 
@@ -257,8 +320,7 @@ class UserManager:
 #
 
 # Gets the table headers and returns them
-# dont ask me why but the SQL interpreter doen't regocnise this SQL statement...
-
+# :param TableName:str -> The name of the table to get headers from
 def GetTableHeaders(TableName: str):
     c, sql = ConnectSQL('main')
     c.execute("""PRAGMA table_info(Orders)""")
@@ -268,7 +330,6 @@ def GetTableHeaders(TableName: str):
     return output
 
 
-print(GetTableHeaders('Orders'))
 
 
 # :class EndpointManager
@@ -324,7 +385,7 @@ class EndpointManager:
     # :return Retrieved data
     @staticmethod
     def GetCurrentOrderCount():
-        c, sql= ConnectSQL("main")
+        c, sql = ConnectSQL("main")
         c.execute("""SELECT COUNT(OrderID) FROM Orders WHERE IsActive == 1""")
         return c.fetchall()[0][0]
 
@@ -354,22 +415,22 @@ class EndpointManager:
 
     ## --- SQL to JSON Data Conversion --- ##
 
+    # :class JSON dict -> Overrides the __str__ method to return a properly JSON formatted dictionary with double quotes
+    class JSONDict(dict):
+        def __str__(self):
+            return json.dumps(self)
+
     # Static method takes raw data from an entity and constructs a JSON formatted dictionary.
     # :param Data list with all the data to add
     # :param TableName name of entity which is being converted -> used to get the entity headers
     @staticmethod
     def ConvertData(Data, TableName):
         headers = GetTableHeaders(TableName)
-        ConvertedData = {}
+        ConvertedData: EndpointManager.JSONDict = {}
         for i in Data:
             new = zip(headers, i)
-            ConvertedData[i[0]] = dict(new)
-        return ConvertedData
-
-    # :class JSON dict -> Overrides the __str__ method to return a properly JSON formatted dictionary with double quotes
-    class JSONDict(dict):
-        def __str__(self):
-            return json.dumps(self)
+            ConvertedData[i[0]] = EndpointManager.JSONDict(new)
+        return EndpointManager.JSONDict(ConvertedData)
 
     # Static method which fetches all the processed data and returns them as a tuple
     # :return Tuple constructed processed data
@@ -398,3 +459,5 @@ class EndpointManager:
     def DumpData(data: dict):
         with open('test.json', 'w') as JsonFile:
             json.dump(data, JsonFile, indent=4)
+
+

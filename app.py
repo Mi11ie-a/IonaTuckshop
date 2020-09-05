@@ -1,32 +1,45 @@
+### Iona Tuckshop : App.py ###
+"""
+Author: Anthony Kirn
+Description: Main Flask application. Handles routes and frontend web functionality
+
+"""
+
+# Imports
 from flask import Flask, render_template, session, request, redirect, url_for
 from DatabaseManager import OrderingManager, ItemManager, UserManager, User, Item, GetTableHeaders, EndpointManager
 from flask_login import login_manager, login_required, login_user, logout_user
 
+# DEFINE app as Flask instance
 app = Flask(__name__)
 
 # Init all managers
-# OrderMan = OrderingManager()
+OrderMan = OrderingManager()
 UserMan = UserManager()
 ItemMan = ItemManager()
 
-print(ItemMan)
+# Init the Flask login manager
 loginman = login_manager.LoginManager()
+
+# Register the login manager with the Flask app
 loginman.init_app(app)
+
+# Set Secret key of Flask app
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-
-## THIS CRAP IS USELESS TO THE ASSIGNMENT
-
+# :route / -> Main landing page of website
 @app.route('/')
 def Landing():
     return render_template('index.html')
 
-
+# :route '/login' -> Login page of application
 @app.route('/login')
 def LoginPage():
     return render_template('signin.html')
 
-
+# :route '/menu/<search>' -> Tuckshop menu page
+# :param search:Item -> The item to display from search results
+# :login_required -> Registers with login manager that the user is required to be authenticated
 @app.route('/menu/<search>')
 @login_required
 def Menu(search:Item):
@@ -35,7 +48,7 @@ def Menu(search:Item):
     else:
         return render_template('items.html', items=ItemMan.Items)
 
-
+# :route '/loginredirect' -> Authenticates the user
 @app.route('/loginredirect', methods=['POST'])
 def Login():
     if request.method == "POST":
@@ -54,13 +67,13 @@ def Login():
     else:
         return redirect(url_for('Landing'))
 
-
+# :route '/userlogout' -> Logs the user out of the session
 @app.route('/userlogout')
 def LogoutUser():
     logout_user()
     return redirect(url_for('Landing'))
 
-
+# :route '/searchmenu' -> Queries database for search query
 @app.route('/searchmenu', methods=['POST', 'GET'])
 def SearchMenu():
     if request.method == 'POST':
@@ -103,18 +116,8 @@ def GetProcessed():
                            json=EndpointManager.ConvertProcessedData(EndpointManager.ConstructProcessedData()))
 
 
-
-
-
-
-# doing some stuff
-
-@app.route('/test')
-def Test():
-    return render_template('endpoints.html', json=EndpointManager.LoadData())
-
-
 # Check to see if the user is still valid
+# :param user_id:int -> The id of the user to check
 @loginman.user_loader
 def load_user(user_id):
     return UserMan.LoadUserFromID(user_id)
